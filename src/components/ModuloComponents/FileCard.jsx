@@ -27,17 +27,17 @@ const FileCard = ({ file, onView, onDownload }) => {
   return (
     <div className="border rounded-md">
       <div className="p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="text-gray-700">
+        <div className="flex items-start sm:items-center justify-between">
+          <div className="flex items-start sm:items-center gap-3 flex-1 pr-2">
+            <div className="text-gray-700 pt-1 sm:pt-0">
               {fileTypeInfo.icon}
             </div>
-            <div className="flex items-center gap-2">
-              <span className={fileTypeInfo.color}>{fileTypeInfo.emoji}</span>
-              <span className="font-medium">{file.fileName}</span>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+              <span className={`${fileTypeInfo.color} mb-1 sm:mb-0`}>{fileTypeInfo.emoji}</span>
+              <span className="font-medium break-words">{file.fileName}</span>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <button 
               className="text-gray-500 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-100"
               onClick={toggleMenu}

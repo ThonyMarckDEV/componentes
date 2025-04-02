@@ -128,56 +128,58 @@ export default function Modulo() {
 
   return (
     <div className="w-full flex flex-col lg:flex-row">
-      {/* Sidebar de módulos */}
-      <div className="w-full lg:w-1/4 pr-0 lg:pr-4">
-        <div className="sticky top-4 space-y-4">
+      {/* Sidebar de módulos - Hacerlo fijo en móvil para mejorar UX */}
+      <div className="w-full lg:w-1/4 pr-0 lg:pr-4 bg-white z-10">
+        <div className="lg:sticky lg:top-4 space-y-4">
           <h2 className="text-xl font-bold mb-4">Fases del Proyecto</h2>
-          {moduleData.map((module) => (
-            <div 
-              key={module.id} 
-              className={`border rounded p-3 cursor-pointer transition-all ${
-                expandedModuleId === module.id 
-                  ? "bg-blue-50 border-blue-200" 
-                  : "bg-white hover:bg-gray-50"
-              }`}
-              onClick={() => toggleExpand(module.id)}
-            >
-              <div className="flex items-center justify-between">
-                <div className="font-medium text-sm">
-                  {module.number}. {module.title}
-                </div>
-                <div className="text-gray-500">
-                  {expandedModuleId === module.id ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m18 15-6-6-6 6"/>
-                    </svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m6 9 6 6 6-6"/>
-                    </svg>
-                  )}
+          <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 lg:overflow-visible">
+            {moduleData.map((module) => (
+              <div 
+                key={module.id} 
+                className={`border rounded p-3 cursor-pointer transition-all flex-shrink-0 lg:flex-shrink w-auto lg:w-full ${
+                  expandedModuleId === module.id 
+                    ? "bg-blue-50 border-blue-200" 
+                    : "bg-white hover:bg-gray-50"
+                }`}
+                onClick={() => toggleExpand(module.id)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="font-medium text-sm whitespace-nowrap mr-2">
+                    {module.number}. {module.title}
+                  </div>
+                  <div className="text-gray-500">
+                    {expandedModuleId === module.id ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m18 15-6-6-6 6"/>
+                      </svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m6 9 6 6 6-6"/>
+                      </svg>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Contenido principal */}
+      {/* Contenido principal - Arreglar el problema de scroll */}
       <div className="w-full lg:w-3/4 mt-6 lg:mt-0">
         {moduleData.map((module) => (
           <div 
             key={module.id} 
-            className={`transition-all duration-300 overflow-hidden mb-8 ${
+            className={`transition-all duration-300 pb-20 mb-8 ${
               expandedModuleId === module.id 
-                ? "opacity-100 max-h-screen" 
-                : "opacity-0 max-h-0"
+                ? "block" 
+                : "hidden"
             }`}
           >
             {/* Cabecera del módulo */}
             <div className="border rounded-md mb-4">
-              <div className="flex items-start p-4 gap-4">
-                <div className="bg-gray-100 p-2 rounded-md min-w-[150px] flex items-center justify-center">
+              <div className="flex flex-col sm:flex-row items-start p-4 gap-4">
+                <div className="bg-gray-100 p-2 rounded-md min-w-[120px] flex items-center justify-center mx-auto sm:mx-0">
                   <div className="relative w-[120px] h-[120px]">
                     <img
                       src={module.imageUrl || "/placeholder-image.jpg"}
@@ -193,8 +195,8 @@ export default function Modulo() {
               </div>
             </div>
 
-            {/* Lista de archivos */}
-            <div className="space-y-4">
+            {/* Lista de archivos - Con espacio suficiente al final para móviles */}
+            <div className="space-y-4 pb-10">
               {module.files?.map((file) => (
                 <FileCard 
                   key={file.id} 
